@@ -16,7 +16,7 @@ let Usuarios = new Schema({
     username: { type: String, required: true, unique: true }, 
     clave : { type: String, required: true }, 
     tipoUsuario: { type: String, enum: ["Administrador", "Cliente"], default: "Cliente", required: true }, 
-    direcciones: [Direccion]
+    direcciones: [Direccion] //array de direcciones
 
 }, { collection: "usuarios" })
 

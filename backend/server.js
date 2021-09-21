@@ -19,6 +19,8 @@ const categoriaRoute = require('./routes/categorias.route');
 const usuariosRoute = require('./routes/usuarios.route');
 //Productos
 const productosRoute = require('./routes/productos.route');
+//Pedidos
+const pedidosRoute = require('./routes/pedidos.route');
 
 const app = express();
 app.use(cors());
@@ -32,7 +34,8 @@ app.use("/categorias", categoriaRoute);
 app.use("/usuarios", usuariosRoute);
 //productos 
 app.use("/productos", productosRoute);
-
+//Pedidos
+app.use("/pedidos", pedidosRoute);
 
 
 app.get('/', (req, res) => {
