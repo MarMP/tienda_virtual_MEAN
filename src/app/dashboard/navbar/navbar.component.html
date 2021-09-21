@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <span>Tienda-Virtual</span>
+
+    <span class="example-spacer"></span>
+    <button mat-button [routerLink]="['/']">Home</button>
+    <button mat-button [routerLink]="['/categorias']">Categorías</button>
+    <button mat-button [routerLink]="['/usuarios']">Usuarios</button>
+    <button mat-button [routerLink]="['/productos']">Productos</button>
+    
+
+    <button [routerLink]="['/login']" mat-icon-button class="example-icon favorite-icon">
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>

@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+        <h1>Producto</h1>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <form [formGroup]="formGroup">
+
+          <mat-form-field>
+              <mat-label>Referencia</mat-label>
+              <input matInput formControlName="referencia">
+          </mat-form-field>
+          <mat-form-field>
+              <mat-label>Título</mat-label>
+              <input matInput formControlName="titulo">
+          </mat-form-field>
+          <mat-form-field>
+              <mat-label>Descripción</mat-label>
+              <textarea matInput formControlName="descripcion"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Precio</mat-label>
+            <input matInput currencyMask formControlName="precio"  />
+        </mat-form-field>
+          <mat-form-field>
+              <mat-label>Categoria</mat-label>
+              <mat-select formControlName="categoriaId">
+                  <mat-option *ngFor="let item of categorias" value="{{item._id}}">{{item.nombre}}</mat-option>
+              </mat-select>
+          </mat-form-field>  
+      </form>
+  </mat-card-content>
+  <mat-card-footer>
+    <p>
+      <button class="boton" mat-raised-button color="primary" (click)="guardar()">
+        <mat-icon>check</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" routerLink="/productos">
+        <mat-icon>cancell</mat-icon>
+      </button>
+    </p>
+  </mat-card-footer>
+</mat-card>

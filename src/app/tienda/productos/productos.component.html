@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<div *ngIf="!editMode">
+    <input type="button" (click)="insertProducto()" value="Añadir nuevo producto">
+    <hr>
+    <input type="text" [(ngModel)]="textoReferencia">
+    <input type="text" [(ngModel)]="textoTitulo">
+    <input type="text" [(ngModel)]="textoDescripcion">
+    <input type="text" [(ngModel)]="textoPrecio">
+    <input type="text" [(ngModel)]="textocategoriaId">
+    <hr>
+    <div *ngFor="let item of lstProductos | async;">
+        <p>Id: {{ item._id }}</p>
+        <p>Ref: {{ item.referencia }}</p>
+        <p>Titulo: {{ item.titulo }}</p>
+        <p>Descripcion: {{ item.descripcion }}</p>
+        <p>Precio: {{ item.precio }}</p>
+        <p>CategoriaId: {{ item.categoriaId.nombre }}</p>
+        <input type="button" value="Editar" (click)="edit(item._id)">
+        <input type="button" value="Eliminar" (click)="delete(item._id)">
+        <hr>
+    </div>
+</div>
+
+<div *ngIf="editMode">
+    <p>
+        <label for="titulo">Título: </label>
+        <input type="text" id="titulo" [(ngModel)]="productEdit.referencia">
+        <input type="text" id="titulo" [(ngModel)]="productEdit.titulo">
+        <input type="text" id="titulo" [(ngModel)]="productEdit.descripcion">
+        <input type="text" id="titulo" [(ngModel)]="productEdit.precio">
+        <input type="text" id="titulo" [(ngModel)]="productEdit.categoriaId">
+    </p>
+
+    <input type="button" value="Guardar" (click)="save()">
+    <input type="button" value="Cancelar" (click)="cancelEdit()">
+  
+</div>

@@ -1,0 +1,80 @@
+<app-navbar></app-navbar>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Usuario</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="formGroup">
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="apellido">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>DNI</mat-label>
+        <input matInput formControlName="dni">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Clave</mat-label>
+        <input matInput formControlName="clave">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Tipo de Usuario</mat-label>
+        <mat-select formControlName="tipoUsuario">
+          <mat-option *ngFor="let item of userTypesValues" value="{{item}}">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <fieldset formArrayName="direcciones" *ngFor="let dir of getDireccionesFormArray().controls; let i = index;">
+        <legend>Dirección</legend>
+        <div [formGroupName]="i">
+          <mat-form-field>
+            <mat-label>Direccion</mat-label>
+            <input matInput formControlName="calle">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Localidad</mat-label>
+            <input matInput formControlName="localidad">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Provincia</mat-label>
+            <input matInput formControlName="provincia">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>CP</mat-label>
+            <input matInput formControlName="cp">
+          </mat-form-field>
+          <p class="">
+            <button mat-raised-button color="accent" (click)="delDireccion(i)">Eliminar direccion</button>
+          </p>
+        </div>
+      </fieldset>
+      <p>
+        <button class="botonAnadir" mat-raised-button color="primary" (click)="addDireccion()">Añadir direccion</button>
+      </p>
+    </form>
+  </mat-card-content>
+  <mat-card-footer>
+    <p>
+      <button class="boton" mat-raised-button color="primary" (click)="guardar()">
+        <mat-icon>check</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" routerLink="/usuarios">
+        <mat-icon>cancell</mat-icon>
+      </button>
+    </p>
+  </mat-card-footer>
+</mat-card>

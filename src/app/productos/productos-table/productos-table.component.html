@@ -1,0 +1,64 @@
+<app-navbar></app-navbar>
+<div class="mat-elevation-z8">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Gestión de Productos </mat-card-title>
+      <button class="nuevo" mat-raised-button color="primary" routerLink="/productos/nuevo">
+        <mat-icon>add</mat-icon> Añadir
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table class="full-width-table" matSort aria-label="Elements">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let row">{{row._id}}</td>
+        </ng-container>
+        <!-- Referencia Column -->
+        <ng-container matColumnDef="referencia">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Referencia</th>
+          <td mat-cell *matCellDef="let row">{{row.referencia}}</td>
+        </ng-container>
+        <!-- titulo Column -->
+        <ng-container matColumnDef="titulo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Titulo</th>
+          <td mat-cell *matCellDef="let row">{{row.titulo}}</td>
+        </ng-container>
+        <!-- Descripcion Column -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</th>
+          <td mat-cell *matCellDef="let row">{{row.descripcion}}</td>
+        </ng-container>
+        <!-- Precio Column -->
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+          <td mat-cell *matCellDef="let row">{{row.precio}}</td>
+        </ng-container>
+        <!-- CategoriaID Column -->
+        <ng-container matColumnDef="categoriaId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+          <td mat-cell *matCellDef="let row">{{row.categoriaId.nombre}}</td>
+        </ng-container>
+        <!-- Acciones Column -->
+        <ng-container matColumnDef="acciones">
+          <th class="accion" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row" style="text-align: right;">
+            <button mat-icon-button color="primary" routerLink="/productos/editar/{{row._id}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button style="color: #e15639" (click)="borrarProducto(row._id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]" aria-label="Select page">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

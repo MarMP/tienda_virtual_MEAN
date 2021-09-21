@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div *ngIf="!edtiMode">
+    <input type="button" (click)="insertCategoria()" value="Crea nueva categoría">
+
+    <input type="text" [(ngModel)]="texto">
+    <p> El texto es --> {{ texto }} </p>
+    <hr>
+
+
+    <div *ngFor="let item of lstCategoria | async;">
+        <p>Id: {{ item._id }}</p>
+        <p>Nombre: {{ item.nombre }}</p>
+        <input type="button" value="Editar" (click)="edit(item._id)">
+        <input type="button" value="Eliminar" (click)="delete(item._id)">
+        <hr>
+    </div>
+</div>
+
+<div *ngIf="edtiMode">
+    <p>
+        <label for="titulo">Título: </label>
+        <input type="text" id="titulo" [(ngModel)]="catEdit.nombre">
+    </p>
+
+
+    <input type="button" value="Cancelar" (click)="cancelEdit()">
+    <input type="button" value="Guardar" (click)="save()">
+</div>

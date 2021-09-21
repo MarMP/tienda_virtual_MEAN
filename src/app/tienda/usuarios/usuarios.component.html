@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+<div *ngIf="!editMode">
+    <input type="button" (click)="insertUsuario()" value="Añadir nuevo ususario">
+    <hr>
+
+    <input type="text" [(ngModel)]="textoNombre">
+    <input type="text" [(ngModel)]="textoApellidos">
+    <input type="text" [(ngModel)]="textoDni">
+    <input type="text" [(ngModel)]="textoEmail">
+    <input type="text" [(ngModel)]="textoUsername">
+    <input type="text" [(ngModel)]="textoClave">
+    <input type="text" [(ngModel)]="textoTipoUsuario">
+    <input type="text" [(ngModel)]="textoDirecciones">
+
+    <hr>
+
+
+    <div *ngFor="let item of lstUsuario | async;">
+        <p>Id: {{ item._id }}</p>
+        <p>Nombre: {{ item.nombre }}</p>
+        <p>Apellidos: {{ item.apellidos }}</p>
+        <p>DNI: {{ item.dni }}</p>
+        <p>Username: {{ item.username }}</p>
+        <p>Clave: {{ item.clave }}</p>
+        <p>Tipo de usuario: {{ item.tipoUsuario }}</p>
+        <p>Direcciones: {{ item.direcciones[0].calle }}</p>
+        <input type="button" value="Editar" (click)="edit(item._id)">
+        <input type="button" value="Eliminar" (click)="delete(item._id)">
+        <hr>
+    </div>
+</div>
+
+<div *ngIf="editMode">
+    <p>
+        <label for="titulo">Título: </label>
+        <input type="text" id="titulo" [(ngModel)]="userEdit.nombre">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.apellidos">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.dni">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.email">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.username">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.clave">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.tipoUsuario">
+        <input type="text" id="titulo" [(ngModel)]="userEdit.direcciones">
+    </p>
+
+
+    <input type="button" value="Cancelar" (click)="cancelEdit()">
+    <input type="button" value="Guardar" (click)="save()">
+</div>
