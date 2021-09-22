@@ -1,93 +1,88 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PedidosService } from 'src/app/services/pedidos.service';
+import Swal from 'sweetalert2';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import 'moment/locale/es';
+import { Cliente } from 'src/app/models/Pedido';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-pedidos-form',
   templateUrl: './pedidos-form.component.html',
-  styleUrls: ['./pedidos-form.component.css']
+  styleUrls: ['./pedidos-form.component.css'],
+  providers:[
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: {
+      display: {
+        dateInput: 'L',
+        monthYearLabel: 'MMMM YYYY',
+        dateA11yLabel: 'LLLL',
+        monthYearA11yLabel: 'MMMM YYYY',
+      }
+    }},
+  ]
 })
 export class PedidosFormComponent {
-  addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]
+  formGroup = this.fb.group({
+    numeroPedido: [null, Validators.required],
+    fecha: [null, Validators.required],
+    cantidad: [null, Validators.required],
+    descuento: [null, Validators.required],
+    refProducto: [null, Validators.required],
+    tituloProducto: [null, Validators.required],
+    precioUnitario: [null, Validators.required],
+    cliente: [null, Validators.required],
+
+ 
   });
 
-  hasUnitNumber = false;
+  clientes: Cliente[];
 
-  states = [
-    {name: 'Alabama', abbreviation: 'AL'},
-    {name: 'Alaska', abbreviation: 'AK'},
-    {name: 'American Samoa', abbreviation: 'AS'},
-    {name: 'Arizona', abbreviation: 'AZ'},
-    {name: 'Arkansas', abbreviation: 'AR'},
-    {name: 'California', abbreviation: 'CA'},
-    {name: 'Colorado', abbreviation: 'CO'},
-    {name: 'Connecticut', abbreviation: 'CT'},
-    {name: 'Delaware', abbreviation: 'DE'},
-    {name: 'District Of Columbia', abbreviation: 'DC'},
-    {name: 'Federated States Of Micronesia', abbreviation: 'FM'},
-    {name: 'Florida', abbreviation: 'FL'},
-    {name: 'Georgia', abbreviation: 'GA'},
-    {name: 'Guam', abbreviation: 'GU'},
-    {name: 'Hawaii', abbreviation: 'HI'},
-    {name: 'Idaho', abbreviation: 'ID'},
-    {name: 'Illinois', abbreviation: 'IL'},
-    {name: 'Indiana', abbreviation: 'IN'},
-    {name: 'Iowa', abbreviation: 'IA'},
-    {name: 'Kansas', abbreviation: 'KS'},
-    {name: 'Kentucky', abbreviation: 'KY'},
-    {name: 'Louisiana', abbreviation: 'LA'},
-    {name: 'Maine', abbreviation: 'ME'},
-    {name: 'Marshall Islands', abbreviation: 'MH'},
-    {name: 'Maryland', abbreviation: 'MD'},
-    {name: 'Massachusetts', abbreviation: 'MA'},
-    {name: 'Michigan', abbreviation: 'MI'},
-    {name: 'Minnesota', abbreviation: 'MN'},
-    {name: 'Mississippi', abbreviation: 'MS'},
-    {name: 'Missouri', abbreviation: 'MO'},
-    {name: 'Montana', abbreviation: 'MT'},
-    {name: 'Nebraska', abbreviation: 'NE'},
-    {name: 'Nevada', abbreviation: 'NV'},
-    {name: 'New Hampshire', abbreviation: 'NH'},
-    {name: 'New Jersey', abbreviation: 'NJ'},
-    {name: 'New Mexico', abbreviation: 'NM'},
-    {name: 'New York', abbreviation: 'NY'},
-    {name: 'North Carolina', abbreviation: 'NC'},
-    {name: 'North Dakota', abbreviation: 'ND'},
-    {name: 'Northern Mariana Islands', abbreviation: 'MP'},
-    {name: 'Ohio', abbreviation: 'OH'},
-    {name: 'Oklahoma', abbreviation: 'OK'},
-    {name: 'Oregon', abbreviation: 'OR'},
-    {name: 'Palau', abbreviation: 'PW'},
-    {name: 'Pennsylvania', abbreviation: 'PA'},
-    {name: 'Puerto Rico', abbreviation: 'PR'},
-    {name: 'Rhode Island', abbreviation: 'RI'},
-    {name: 'South Carolina', abbreviation: 'SC'},
-    {name: 'South Dakota', abbreviation: 'SD'},
-    {name: 'Tennessee', abbreviation: 'TN'},
-    {name: 'Texas', abbreviation: 'TX'},
-    {name: 'Utah', abbreviation: 'UT'},
-    {name: 'Vermont', abbreviation: 'VT'},
-    {name: 'Virgin Islands', abbreviation: 'VI'},
-    {name: 'Virginia', abbreviation: 'VA'},
-    {name: 'Washington', abbreviation: 'WA'},
-    {name: 'West Virginia', abbreviation: 'WV'},
-    {name: 'Wisconsin', abbreviation: 'WI'},
-    {name: 'Wyoming', abbreviation: 'WY'}
-  ];
+  
+  constructor(private fb: FormBuilder, private pedidoService: PedidosService, private usuariosService: UsuariosService,
+     private activatedRoute: ActivatedRoute, 
+    private router: Router) {
+      this.clientes = [];
+    }
 
-  constructor(private fb: FormBuilder) {}
 
-  onSubmit(): void {
-    alert('Thanks!');
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      console.log(params);
+      //this.limpiarFormulario();
+      if (typeof params.id !== "undefined") {
+        this.pedidoService.findPedById(params.id).subscribe(data => {
+          if (data._id === params.id) {
+            console.log(data);
+            //this.pedido = data;
+            //console.log(this.producto);
+            //this.buildForm();
+          } else {
+            this.router.navigate(["/pedidos"]);
+          }
+        })
+      }
+      //this.buildForm();
+
+      this.usuariosService.getUsuarios().subscribe(data => {
+        this.clientes = data;
+      });
+    })
   }
+
+  guardar(){}
+  addDireccion(){}
+  delDireccion(i: number){}
 }

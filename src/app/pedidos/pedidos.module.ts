@@ -16,6 +16,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+
+
 
 
 @NgModule({
@@ -37,7 +41,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatSortModule, 
     DashboardModule, 
-    MatIconModule
+    MatIconModule, 
+    MatDatepickerModule,
+    MomentDateModule
+
+
   ]
 })
 export class PedidosModule { }

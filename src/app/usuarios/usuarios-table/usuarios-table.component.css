@@ -6,9 +6,11 @@
   margin-left: 30px;
   margin-right: 30px;
 }
-
 mat-card{
   background-color: #cfd8dc;
+}
+mat-card-title {
+  padding-top: 20px;
 }
 .nuevo {
   position: absolute;

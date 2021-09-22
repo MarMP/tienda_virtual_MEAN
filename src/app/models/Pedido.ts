@@ -1,6 +1,7 @@
 import { Direccion } from "./Usuario";
 
 export interface DetallePedido {
+    _id?: string,
     cantidad: number, 
     descuento: number, 
     refProducto: string, 
@@ -10,6 +11,7 @@ export interface DetallePedido {
 }
 
 export interface Cliente {
+    _id?: string,
     nombre: string, 
     apellido: string, 
     dni: string, 
@@ -23,7 +25,7 @@ export interface Pedido {
     fecha: Date, 
     precioTotal: number, 
     pedidoDetalle: Array<DetallePedido>, 
-    cliente: Cliente, 
+    cliente: Cliente | string, 
     direccionEntrega: Direccion
 
 }

@@ -9,6 +9,9 @@
 mat-card{
   background-color: #cfd8dc;
 }
+mat-card-title {
+  padding-top: 20px;
+}
 .nuevo {
   position: absolute;
   right: 0;
