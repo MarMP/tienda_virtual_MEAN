@@ -21,7 +21,7 @@ export class UsuariosTableComponent implements AfterViewInit {
   listaUsuarios: Usuario[];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'nombre', 'apellido', 'dni', 'email', 'username', 'tipoUsuario', 'acciones'];
+  displayedColumns = ['id', 'nombre', 'apellido', 'dni', 'email', 'direccion', 'username', 'tipoUsuario', 'acciones'];
 
 
   constructor(private usuarioService: UsuariosService) {

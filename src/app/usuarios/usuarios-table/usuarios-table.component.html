@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="mat-elevation-z8">
+<div class="tabla">
   <mat-card>
     <mat-card-header>
       <mat-card-title> Gestión de Usuarios </mat-card-title>
@@ -35,6 +35,17 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
           <td mat-cell *matCellDef="let row" style="padding-right: 6px;">{{row.email}}</td>
         </ng-container>
+          <!-- Direccion Column -->
+          <ng-container matColumnDef="direccion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Dirección</th>
+            <td mat-cell *matCellDef="let row" style="padding-right: 6px;">
+              <div *ngFor="let dire of row.direcciones">
+                C/{{dire.calle}} ,
+                {{dire.localidad}}, 
+                {{dire.cp}}
+              </div>
+            </td>
+          </ng-container>
         <!-- Username Column -->
         <ng-container matColumnDef="username">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>

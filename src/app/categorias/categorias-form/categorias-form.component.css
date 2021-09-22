@@ -4,9 +4,18 @@ mat-form-field {
 
 mat-card {
   margin: 40px;
+  background-color: #eeeeee;
 }
+
+.tamano{
+  margin-top: 5%;
+  max-width: 70%;
+  margin-left: 15%;
+} 
 
 .boton{
   margin-left: 15px;
   margin-right: 16px;
 }
+
+

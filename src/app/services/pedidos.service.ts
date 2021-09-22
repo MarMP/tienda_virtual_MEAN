@@ -1,30 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { Categoria } from '../models/Categoria';
 import { catchError } from 'rxjs/operators';
-
+import { Pedido } from '../models/Pedido';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriasService {
+export class PedidosService {
 
-  urlBase = "http://localhost:4000/categorias/";
-
+  urlBase = "http://localhost:4000/pedidos/";
 
   constructor(private http: HttpClient) { }
 
-  getCategorias(): Observable<any> {
+  getPedidos(): Observable<any> {
     let url = this.urlBase;
     return this.http.get(url);
   }
 
-  insertCategoria(categoria: Categoria): Observable<any>{
-    console.log("Servicion insertar");
+  insertPedido(pedido: Pedido): Observable<any>{
+    console.log("Servicio insertar");
     let url = this.urlBase;
     
-    return this.http.post(url, categoria, {responseType: 'json'})
+    return this.http.post(url, pedido, {responseType: 'json'})
       .pipe(
         catchError(e => {
           console.log(e); 
@@ -33,21 +31,19 @@ export class CategoriasService {
       );
   }
 
-  findCatById(id:string): Observable<any> {
+  findPedById(id:string): Observable<any> {
     let url = this.urlBase+id;
     return this.http.get(url);
   }
   
-  updateCategoria(categoria: Categoria): Observable<any> {
-    let url = this.urlBase+categoria._id;
-    delete categoria._id;
-    return this.http.put(url, categoria);
+  updatePedido(pedido: Pedido): Observable<any> {
+    let url = this.urlBase+pedido._id;
+    delete pedido._id;
+    return this.http.put(url, pedido);
   }
   
-  delCategoria(id:string): Observable<any> {
+  delPedido(id:string): Observable<any> {
     let url = this.urlBase+id;
     return this.http.delete(url);
   }
 }
-
-

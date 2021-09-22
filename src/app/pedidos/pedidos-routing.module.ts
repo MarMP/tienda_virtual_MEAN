@@ -7,7 +7,7 @@ import { PedidosComponent } from './pedidos.component';
 const routes: Routes = [
   { path: '', component: PedidosTableComponent }, 
   { path: 'nuevo', component: PedidosFormComponent},
-  { path: 'edit/:id', component: PedidosFormComponent}
+  { path: 'editar/:id', component: PedidosFormComponent}
 
 ];
 

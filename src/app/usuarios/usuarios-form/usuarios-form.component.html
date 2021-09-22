@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<div class="tamano">
 <mat-card>
   <mat-card-header>
     <mat-card-title>
@@ -58,7 +59,7 @@
             <input matInput formControlName="cp">
           </mat-form-field>
           <p class="">
-            <button mat-raised-button color="accent" (click)="delDireccion(i)">Eliminar direccion</button>
+            <button mat-raised-button style="background-color: #e15639; color:blanchedalmond" (click)="delDireccion(i)">Eliminar direccion</button>
           </p>
         </div>
       </fieldset>
@@ -72,9 +73,10 @@
       <button class="boton" mat-raised-button color="primary" (click)="guardar()">
         <mat-icon>check</mat-icon>
       </button>
-      <button mat-raised-button color="accent" routerLink="/usuarios">
+      <button mat-raised-button style="background-color: #e15639;" routerLink="/usuarios">
         <mat-icon>cancell</mat-icon>
       </button>
     </p>
   </mat-card-footer>
 </mat-card>
+</div>

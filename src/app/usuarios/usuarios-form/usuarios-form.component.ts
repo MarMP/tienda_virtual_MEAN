@@ -36,7 +36,7 @@ export class UsuariosFormComponent {
       console.log(params);
       this.limpiarFormulario();
       if (typeof params.id !== "undefined") {
-        this.usuarioService.findCatById(params.id).subscribe(data => {
+        this.usuarioService.findUserById(params.id).subscribe(data => {
           if (data._id === params.id) {
             console.log(data);
             this.usuario = data;

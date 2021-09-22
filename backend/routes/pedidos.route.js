@@ -10,7 +10,7 @@ let Usuario = require('../models/Usuario');
 pedidosRoute.route('/').get((req, res) => {
     console.log("Listado de pedidos");
 
-    Pedido.find().populate("idUsuario").exec((err, data) => {
+    Pedido.find().exec((err, data) => {
         if(err) {
             return next(err);
         } else {

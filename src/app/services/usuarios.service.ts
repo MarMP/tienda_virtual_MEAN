@@ -30,7 +30,7 @@ export class UsuariosService {
       );
   }
 
-  findCatById(id:string): Observable<any> {
+  findUserById(id:string): Observable<any> {
     let url = this.urlBase+id;
     return this.http.get(url);
   }

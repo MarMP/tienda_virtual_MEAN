@@ -16,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatIconModule } from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -37,7 +38,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     ReactiveFormsModule, 
     DashboardModule, 
-    MatIconModule
+    MatIconModule, 
+    MatGridListModule
+    
   ]
 })
 export class UsuariosModule { }

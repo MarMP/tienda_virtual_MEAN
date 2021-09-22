@@ -26,7 +26,7 @@ export class ProductosService {
     return this.http.post(url, producto, {responseType: 'json'})
       .pipe(
         catchError(e => {
-          console.log("ERROR PUTO");
+          console.log("ERROR en insert");
           console.log(e); 
           return throwError(e);
         })

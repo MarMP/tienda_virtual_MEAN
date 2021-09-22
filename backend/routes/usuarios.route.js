@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 const usuarioRoute = express.Router();
 
-//load del modelo de mongoose
+//Modelo de mongoose
 let Usuario = require('../models/Usuario');
 
 //añadimos las rutas

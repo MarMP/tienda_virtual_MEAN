@@ -1,6 +1,18 @@
 .full-width-table {
   width: 100%;
 }
+
+mat-card{
+  background-color: #cfd8dc;
+}
+
+.tabla{
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+
+}
+
 .nuevo {
  position: absolute;
  right: 0;

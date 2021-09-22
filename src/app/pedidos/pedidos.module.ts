@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { DashboardModule } from '../dashboard/dashboard.module';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule, 
-    DashboardModule
+    DashboardModule, 
+    MatIconModule
   ]
 })
 export class PedidosModule { }

@@ -54,7 +54,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   edit(id:string) {
-    this.usuarioService.findCatById(id).subscribe(data => {
+    this.usuarioService.findUserById(id).subscribe(data => {
       this.userEdit = data;
       this.editMode = true;
     });
