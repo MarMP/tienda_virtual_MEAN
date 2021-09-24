@@ -16,45 +16,132 @@
           <br>
           <mat-form-field>
             <mat-label>Fecha del pedido</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input matInput formControlName="fecha">
           </mat-form-field>
         </div>
-        <hr>
-        <mat-form-field>
-          <mat-label>Catidad</mat-label>
-          <input matInput formControlName="cantidad">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Descuento</mat-label>
-          <input matInput formControlName="descuento">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Ref producto</mat-label>
-          <input matInput formControlName="refProducto">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Titulo del producto</mat-label>
-          <input matInput formControlName="tituloProducto">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Precio unitario</mat-label>
-          <input matInput formControlName="precioUnitario">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Usuario</mat-label>
-          <mat-select formControlName="cliente">
-              <mat-option *ngFor="let item of clientes" value="{{item._id}}">
-                {{item.nombre}}
-                {{item.apellido}}
+
+        <fieldset>
+          <legend class="titulo">Datos del cliente</legend>
+          <mat-form-field class="clienteSelect">
+            <mat-label>Buscar cliente</mat-label>
+            <mat-select (selectionChange)="selectedUsuario($event.value)">
+              <mat-option *ngFor="let client of usuarios" value="{{client | json }}">
+                {{client.nombre}}
+                {{client.apellido}}
               </mat-option>
-          </mat-select>
-      </mat-form-field>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="user">
+            <mat-label>Direcciones</mat-label>
+            <mat-select (selectionChange)="selectedDir($event.value)">
+              <mat-option *ngFor="let dir of user.direcciones" value="{{ dir | json }}">
+                {{dir.calle}}, {{dir.localidad}}, {{dir.provincia}} ({{dir.cp}})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br>
 
+          <div formGroupName="cliente">
+            <mat-form-field>
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Apellido</mat-label>
+              <input matInput formControlName="apellido">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>DNI</mat-label>
+              <input matInput formControlName="dni">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>ID User</mat-label>
+              <input matInput formControlName="idUsuario">
+            </mat-form-field>
+          </div>
 
+          <br>
+          <div formGroupName="direccionEntrega">
+            <mat-form-field>
+              <mat-label>Calle</mat-label>
+              <input matInput formControlName="calle">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Localidad</mat-label>
+              <input matInput formControlName="localidad">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Provincia</mat-label>
+              <input matInput formControlName="provincia">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>CP</mat-label>
+              <input matInput formControlName="cp">
+            </mat-form-field>
+          </div>
+        </fieldset>
 
+        <fieldset formArrayName="pedidoDetalle" *ngFor="let ped of getPedidoDetalleFormArray().controls; let i = index;">
+          <legend class="titulo">Datos del pedido</legend>
+          <div [formGroupName]="i">
+            <mat-form-field>
+              <mat-label>Catidad</mat-label>
+              <input matInput formControlName="cantidad">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Descuento</mat-label>
+              <input matInput formControlName="descuento">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Ref producto</mat-label>
+              <input matInput formControlName="refProducto">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Titulo del producto</mat-label>
+              <input matInput formControlName="tituloProducto">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Precio unitario</mat-label>
+              <input matInput formControlName="precioUnitario">
+            </mat-form-field>
+            <p class="">
+              <button mat-raised-button style="background-color: #e15639; color:blanchedalmond"
+                (click)="delDetallePedido(i)">Eliminar</button>
+            </p>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="titulo">Añadir producto</legend>
+          <mat-form-field class="productosSelect">
+            <mat-label>Buscar producto</mat-label>
+            <mat-select (selectionChange)="selectedProduct($event.value)">
+              <mat-option *ngFor="let item of productos" value="{{item | json }}">
+                {{item.referencia}} -
+                {{item.titulo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </fieldset>
+        
 
+  
+        <br>
+        <p>
+          <button class="botonAnadir" mat-raised-button color="primary" matTooltip="Añade más pedidos a la lista"
+            (click)="addPedido()">Añadir pedido</button>
+        </p>
+
+        <div class="principales">
+          <mat-form-field>
+            <mat-label>Total: </mat-label>
+            <input style="text-align: right;" matInput formControlName="precioTotal">
+          </mat-form-field>
+          <br>
+        </div>
 
       </form>
     </mat-card-content>

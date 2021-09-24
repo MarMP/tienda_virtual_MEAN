@@ -26,3 +26,14 @@ mat-card {
 .principales {
   text-align: right;
 }
+
+.titulo {
+  text-align: center;
+}
+.productosSelect {
+  width: 100%;
+}
+.clienteSelect {
+  width: 50%;
+}
+

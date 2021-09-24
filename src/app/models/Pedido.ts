@@ -22,10 +22,10 @@ export interface Cliente {
 export interface Pedido {
     _id?: string,
     numeroPedido: string, 
-    fecha: Date, 
+    fecha: Date | string, 
     precioTotal: number, 
     pedidoDetalle: Array<DetallePedido>, 
-    cliente: Cliente | string, 
+    cliente: Cliente, 
     direccionEntrega: Direccion
 
 }

@@ -19,7 +19,7 @@ export class PedidosTableComponent implements AfterViewInit {
   dataSource: PedidosTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'numeroPedido', 'cliente' , 'fecha', 'tituloProducto', 'cantidad', 'precioTotal', 'acciones' ];
+  displayedColumns = ['numeroPedido', 'cliente' , 'dni', 'email', 'direccionEntrega', 'fecha', 'cantidad', 'precioTotal', 'acciones' ];
   listaPedidos: Pedido[];
 
   constructor(private pedidoService: PedidosService) {

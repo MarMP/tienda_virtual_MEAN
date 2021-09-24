@@ -16,7 +16,20 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatIconModule } from '@angular/material/icon';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: false,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: " ",
+  suffix: " €",
+  thousands: ".",
+  inputMode: CurrencyMaskInputMode.FINANCIAL
+};
 
 @NgModule({
   declarations: [
@@ -37,7 +50,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatSortModule, 
     DashboardModule, 
-    MatIconModule
+    MatIconModule,
+    NgxCurrencyModule 
+    
   ]
 })
 export class ProductosModule { }

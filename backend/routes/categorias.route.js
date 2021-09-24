@@ -3,7 +3,7 @@ const { nextTick } = require('process');
 const app = express();
 const categoriaRoute = express.Router();
 
-//load del modelo de mongoose
+
 let Categoria = require('../models/Categoria');
 
 //añadimos las rutas

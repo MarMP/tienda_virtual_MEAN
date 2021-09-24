@@ -27,7 +27,6 @@ export class UsuariosFormComponent {
 
   constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private activateRoute: ActivatedRoute, private router: Router) {
     this.usuario = { nombre: "", apellido: "", dni: "", email: "", username: "", clave: "", tipoUsuario: UserType.CLIENT, direcciones: [] }
-    this.limpiarFormulario();
   }
 
 
@@ -97,7 +96,6 @@ export class UsuariosFormComponent {
   }
 
   delDireccion(i: number) {
-    //this.usuario.direcciones.splice(i, 1);
     this.getDireccionesFormArray().removeAt(i);
   }
 

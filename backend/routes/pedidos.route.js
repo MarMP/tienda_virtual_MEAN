@@ -19,7 +19,7 @@ pedidosRoute.route('/').get((req, res) => {
     })
 });
 
-pedidosRoute.route('/:id').get((req, res) => {
+pedidosRoute.route('/:id').get((req, res, next) => {
     console.log("Listado de pedidos");
     Pedido.findById(req.params.id, (err, data) => {
         if(err) {
@@ -30,17 +30,19 @@ pedidosRoute.route('/:id').get((req, res) => {
     })
 });
 
-pedidosRoute.route("/").post((req, res) => {
+pedidosRoute.route("/").post(async(req, res, next) => {
+    console.log("Entra en insertar pedido");
     Pedido.create(req.body, (err, data) => {
         if(err) {
             return next(err);
+            //res.json(err);
         } else {
             res.json(data);
         }
     })
 });
 
-pedidosRoute.route("/:id").put((req, res) => {
+pedidosRoute.route("/:id").put(async(req, res) => {
     Pedido.findByIdAndUpdate(req.params.id, { $set: req.body }, {new: true}, (err, data) => {
         if(err) {
             return next(err);

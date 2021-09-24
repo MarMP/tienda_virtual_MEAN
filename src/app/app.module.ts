@@ -14,6 +14,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { HomeComponent } from './home/home.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: false,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: " ",
+  suffix: " €",
+  thousands: ".",
+  inputMode: CurrencyMaskInputMode.FINANCIAL
+};
 
 
 
@@ -32,7 +47,10 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    DashboardModule
+    DashboardModule,
+    MatTooltipModule,
+    NgxCurrencyModule,
+
   ],
  
   providers: [

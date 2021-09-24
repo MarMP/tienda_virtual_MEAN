@@ -18,6 +18,8 @@ import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -43,7 +45,9 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
     DashboardModule, 
     MatIconModule, 
     MatDatepickerModule,
-    MomentDateModule
+    MomentDateModule,
+    MatAutocompleteModule,
+    MatTooltipModule
 
 
   ]
