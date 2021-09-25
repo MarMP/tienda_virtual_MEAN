@@ -30,7 +30,7 @@ productosRoute.route('/:id').get((req, res) => {
     })
 });
 
-productosRoute.route("/").post((req, res) => {
+productosRoute.route("/").post((req, res, next) => {
     Productos.create(req.body, (err, data) => {
         if(err) {
             return next(err);

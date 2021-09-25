@@ -2,34 +2,34 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let DetallePedido = new Schema({
-    cantidad: { type: Number }, 
-    descuento: { type: Number }, 
-    refProducto: { type: String }, 
-    tituloProducto: { type: String }, 
-    precioUnitario: { type: Number }, 
-    precioTotal: { type: Number }
+    cantidad: { type: Number, min:1, required: true }, 
+    descuento: { type: Number, length: {min:0, max: 100}, required: false, default: 0}, 
+    refProducto: { type: String, required: true }, 
+    tituloProducto: { type: String, required: true }, 
+    precioUnitario: { type: Number, min: 0, required: true }, 
+    precioTotal: { type: Number, required: true }
 });
 
 let Cliente = new Schema({
-    nombre: { type: String }, 
-    apellido: { type: String }, 
-    dni: { type: String }, 
-    email: { type: String }, 
-    idUsuario: { type: Schema.Types.ObjectId, ref: "Usuario"}
+    nombre: { type: String, required: true }, 
+    apellido: { type: String, required: true }, 
+    dni: { type: String, required: true }, 
+    email: { type: String, required: true }, 
+    idUsuario: { type: Schema.Types.ObjectId, ref: "Usuario", required: true }
 });
 
 let DireccionEntrega = new Schema({
-    calle: { type: String },  
-    localidad: { type: String },
-    provincia: { type: String }, 
-    cp: { type: String }
+    calle: { type: String, required: true },  
+    localidad: { type: String, required: true },
+    provincia: { type: String, required: true }, 
+    cp: { type: String, required: true }
 });
 
 //Schema de la colección Pedido
 let Pedido = new Schema({
-    numeroPedido: { type: String, unique: true }, 
-    fecha: { type: Date }, 
-    precioTotal: { type: Number }, 
+    numeroPedido: { type: String, required: true, unique: true }, 
+    fecha: { type: Date, default: Date.now() }, 
+    precioTotal: { type: Number, min:0, require: true }, 
     pedidoDetalle: [DetallePedido],
     cliente: Cliente, 
     direccionEntrega: DireccionEntrega

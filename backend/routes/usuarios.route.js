@@ -32,7 +32,7 @@ usuarioRoute.route('/:id').get((req, res) => {
     })
 })
 
-usuarioRoute.route("/").post(async(req, res) => {
+usuarioRoute.route("/").post(async(req, res, next) => {
     console.log("Creamos usuario nuevo");
     let salt = await bcrypt.genSalt(12);
     req.body.clave = bcrypt.hashSync(req.body.clave, salt);

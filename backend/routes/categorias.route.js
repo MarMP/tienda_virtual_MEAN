@@ -31,7 +31,7 @@ categoriaRoute.route('/:id').get((req, res) => {
     })
 });
 
-categoriaRoute.route("/").post((req, res) => {
+categoriaRoute.route("/").post((req, res, next) => {
     Categoria.create(req.body, (err, data) => {
         if(err) {
             return next(err);
@@ -41,7 +41,7 @@ categoriaRoute.route("/").post((req, res) => {
     })
 });
 
-categoriaRoute.route("/:id").put((req, res) => {
+categoriaRoute.route("/:id").put((req, res, next) => {
     Categoria.findByIdAndUpdate(req.params.id, { $set: req.body }, {new: true}, (err, data) => {
         if(err) {
             return next(err);
