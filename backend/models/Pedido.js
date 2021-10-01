@@ -29,9 +29,9 @@ let DireccionEntrega = new Schema({
 let Pedido = new Schema({
     numeroPedido: { type: String, required: true, unique: true }, 
     fecha: { type: Date, default: Date.now() }, 
-    precioTotal: { type: Number, min:0, require: true }, 
+    precioTotal: { type: Number, min:0, required: true }, 
     pedidoDetalle: [DetallePedido],
-    cliente: Cliente, 
+    cliente: { required: true, type: Cliente }, 
     direccionEntrega: DireccionEntrega
 }, { collection: "pedidos"});
 

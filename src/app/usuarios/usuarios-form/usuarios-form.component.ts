@@ -61,11 +61,11 @@ export class UsuariosFormComponent {
       Swal.fire("Usuario modificado correctamente");
     } else {
       req = this.usuarioService.insertUsuario(this.usuario);
-      Swal.fire("Usuario insertado correctamente");
     }
 
     req.subscribe(data => {
       if (typeof data._id !== "undefined") {
+        Swal.fire("Usuario insertado correctamente");
         this.router.navigate(["/usuarios"]);
       } else {
         //alert("error");

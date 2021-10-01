@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,15 +16,16 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { HomeComponent } from './home/home.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { LoginModule } from './login/login.module';
+import { AuthInterceptorService } from './security/auth-interceptor.service';
 
 
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: false,
-  allowZero: true,
   decimal: ",",
   precision: 2,
-  prefix: " ",
+  prefix: "",
   suffix: " €",
   thousands: ".",
   inputMode: CurrencyMaskInputMode.FINANCIAL
@@ -50,13 +51,20 @@ export const customCurrencyMaskConfig = {
     DashboardModule,
     MatTooltipModule,
     NgxCurrencyModule,
+    LoginModule
 
   ],
  
   providers: [
     CategoriasService, 
     UsuariosService, 
-    ProductosService
+    ProductosService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      //Para que no sea singleton y pueda usarse en todas las llamadas
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

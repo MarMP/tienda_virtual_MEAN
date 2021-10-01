@@ -16,9 +16,12 @@
           <br>
           <mat-form-field>
             <mat-label>Fecha del pedido</mat-label>
-            <input matInput formControlName="fecha">
+            <input matInput [matDatepicker]="picker" formControlName="fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
+      
 
         <fieldset>
           <legend class="titulo">Datos del cliente</legend>
@@ -85,15 +88,16 @@
           </div>
         </fieldset>
 
-        <fieldset formArrayName="pedidoDetalle" *ngFor="let ped of getPedidoDetalleFormArray().controls; let i = index;">
+        <fieldset formArrayName="pedidoDetalle"
+          *ngFor="let ped of getPedidoDetalleFormArray().controls; let i = index;">
           <legend class="titulo">Datos del pedido</legend>
           <div [formGroupName]="i">
             <mat-form-field>
               <mat-label>Catidad</mat-label>
-              <input matInput formControlName="cantidad">
+              <input matInput type="number" min="1" formControlName="cantidad">
             </mat-form-field>
             <mat-form-field>
-              <mat-label>Descuento</mat-label>
+              <mat-label>Descuento %</mat-label>
               <input matInput formControlName="descuento">
             </mat-form-field>
             <mat-form-field>
@@ -107,6 +111,12 @@
             <mat-form-field>
               <mat-label>Precio unitario</mat-label>
               <input matInput formControlName="precioUnitario">
+
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Precio total detalle pedido </mat-label>
+              <input matInput formControlName="precioTotal">
+
             </mat-form-field>
             <p class="">
               <button mat-raised-button style="background-color: #e15639; color:blanchedalmond"
@@ -126,9 +136,6 @@
             </mat-select>
           </mat-form-field>
         </fieldset>
-        
-
-  
         <br>
         <p>
           <button class="botonAnadir" mat-raised-button color="primary" matTooltip="Añade más pedidos a la lista"
@@ -142,7 +149,6 @@
           </mat-form-field>
           <br>
         </div>
-
       </form>
     </mat-card-content>
     <mat-card-footer>

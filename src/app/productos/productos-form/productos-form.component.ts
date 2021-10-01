@@ -27,7 +27,7 @@ export class ProductosFormComponent {
   constructor(private fb: FormBuilder, private productoService: ProductosService, private categoriaService: CategoriasService,
     private activatedRoute: ActivatedRoute, private router: Router) {
     this.categorias = [];
-    this.producto = { referencia: "", titulo: "", descripcion: "", precio: 0, categoriaId: "" };
+    this.producto = { referencia: "", titulo: "", descripcion: "", precio: 0.00, categoriaId: "" };
   }
 
   ngOnInit(): void {
@@ -66,11 +66,11 @@ export class ProductosFormComponent {
       Swal.fire("Producto modificado correctamente");
     } else {
       req = this.productoService.insertProductos(this.producto);
-      Swal.fire("Producto insertado correctamente");
     }
 
     req.subscribe(data => {
       if (typeof data._id !== "undefined") {
+        Swal.fire("Producto insertado correctamente");
         this.router.navigate(["/productos"]);
       } else {
         //alert("error");
@@ -84,7 +84,7 @@ export class ProductosFormComponent {
       referencia: "",
       titulo: "",
       descripcion: "",
-      precio: 0,
+      precio: 0.00,
       categoriaId: "",
     });
   }

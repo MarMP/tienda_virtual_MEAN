@@ -3,6 +3,8 @@ const { nextTick } = require('process');
 const bcrypt = require('bcrypt');
 const app = express();
 const usuarioRoute = express.Router();
+const { checkSchema, validationResult } = require('express-validator');
+const usuarioCheckSchema = require('../checkSchemaValidator/usuarioCheckSchema');
 
 //Modelo de mongoose
 let Usuario = require('../models/Usuario');
@@ -32,8 +34,13 @@ usuarioRoute.route('/:id').get((req, res) => {
     })
 })
 
-usuarioRoute.route("/").post(async(req, res, next) => {
+usuarioRoute.route("/").post(checkSchema(usuarioCheckSchema), async(req, res, next) => {
     console.log("Creamos usuario nuevo");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    
     let salt = await bcrypt.genSalt(12);
     req.body.clave = bcrypt.hashSync(req.body.clave, salt);
 
@@ -46,7 +53,11 @@ usuarioRoute.route("/").post(async(req, res, next) => {
     })
 });
 
-usuarioRoute.route("/:id").put(async(req, res) => {
+usuarioRoute.route("/:id").put(checkSchema(usuarioCheckSchema), async(req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     //Si en angular no se modifica la clave, no la manadamos
     if(typeof req.body.clave !== "undefined") {
         let salt = await bcrypt.genSalt(12);

@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tienda-online';
+
+  isLogued(): boolean {
+    if (sessionStorage.getItem("token") !== null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

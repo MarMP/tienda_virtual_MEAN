@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PedidosService } from 'src/app/services/pedidos.service';
@@ -16,7 +16,6 @@ import { Producto } from 'src/app/models/Producto';
 import { ProductosService } from 'src/app/services/productos.service';
 import { MatSelectChange } from '@angular/material/select';
 import { Usuario } from 'src/app/models/Usuario';
-
 
 
 @Component({
@@ -53,6 +52,7 @@ export class PedidosFormComponent {
   referenciaProd: any;
   tituloProd: any;
   precioProd: any;
+  precioTotalDetPed!: number;
 
   constructor(private fb: FormBuilder, private pedidoService: PedidosService, private usuariosService: UsuariosService,
     private productoService: ProductosService, private activatedRoute: ActivatedRoute,
@@ -61,7 +61,7 @@ export class PedidosFormComponent {
     this.usuarios = [];
     this.productos = [];
   }
-//"2021-09-14T00:00:00.000+00:00"
+  //"2021-09-14T00:00:00.000+00:00"
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -104,13 +104,12 @@ export class PedidosFormComponent {
       Swal.fire("El pedido se ha modificado correctamente");
     } else {
       req = this.pedidoService.insertPedido(this.pedido);
-      Swal.fire("Pedido insertado correctamente");
     }
     req.subscribe(data => {
       if (typeof data._id !== "undefined") {
+        Swal.fire("Pedido insertado correctamente");
         this.router.navigate(["/pedidos"]);
       } else {
-        console.log("NO INSERTA");
         Swal.fire("Se ha producido un error");
       }
     });
@@ -119,9 +118,6 @@ export class PedidosFormComponent {
   /* Gestión para la selección de usuario y su correspondiente dirección */
 
   selectedUsuario(usuSelected: string) {
-    // console.log(event.value);
-    //var valorSelectUsu = event.value;
-    //this.usuarios = valorSelectUsu;
     this.user = JSON.parse(usuSelected);
 
     console.log(this.user);
@@ -138,11 +134,7 @@ export class PedidosFormComponent {
   }
 
   selectedDir(direccionSelected: string) {
-    //console.log(event.value);
-    //var valorSelectDir = event.value;
-    //this.usuarios = valorSelectDir;
     let dire = JSON.parse(direccionSelected);
-    //console.log(dire);
 
     //para mostrar en el formulario los campos recogidos del select 
     this.pedido.direccionEntrega.calle = dire.calle;
@@ -168,16 +160,22 @@ export class PedidosFormComponent {
   }
 
   addPedido(ped?: DetallePedido): void {
+    let cantidad = this.formGroup.get('pedidoDetalle')?.value.cantidad;
+    let descuento = this.formGroup.get('pedidoDetalle')?.value.descuento;
+    let precioUni = this.precioProd;
+    this.precioTotalDetPed = precioUni * (1-descuento/100) * cantidad;
+
     if (typeof ped === "undefined") {
       ped = {
-        "cantidad": 0,
+        "cantidad": 1,
         "descuento": 0,
         "refProducto": this.referenciaProd,
         "tituloProducto": this.tituloProd,
         "precioUnitario": this.precioProd,
-        "precioTotal": 0
+        "precioTotal": this.precioTotalDetPed
       };
-    }
+    } 
+
     this.getPedidoDetalleFormArray().push(this.createPedidoDetalleItem(ped));
   }
 
@@ -188,10 +186,8 @@ export class PedidosFormComponent {
     this.referenciaProd = this.producto.referencia;
     this.tituloProd = this.producto.titulo;
     this.precioProd = this.producto.precio;
-
-    // console.log(referenciaProd);
-
   }
+
 
   buildPedidoForm() {
     // FormGroup y los subgrupos para cliente y dirección
@@ -201,13 +197,12 @@ export class PedidosFormComponent {
     this.formGroup.setControl("pedidoDetalle", this.fb.array([]));
 
     if (this.pedido.pedidoDetalle.length != 0) {
-      this.pedido.pedidoDetalle.forEach(ped => {
+      this.pedido.pedidoDetalle.forEach(ped => {        
         this.addPedido(ped);
-        //this.objetNew();
+        
       });
     }
   }
-
 
   objetNew() {
     this.pedido = {

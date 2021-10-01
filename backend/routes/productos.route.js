@@ -2,6 +2,8 @@ const express = require('express');
 const { nextTick } = require('process');
 const app = express();
 const productosRoute = express.Router();
+const { checkSchema, validationResult } = require('express-validator');
+const productosCheckSchema = require('../checkSchemaValidator/productosCheckSchema');
 
 let Productos = require('../models/Productos');
 let Categoria = require('../models/Categoria');
@@ -30,7 +32,11 @@ productosRoute.route('/:id').get((req, res) => {
     })
 });
 
-productosRoute.route("/").post((req, res, next) => {
+productosRoute.route("/").post(checkSchema(productosCheckSchema), (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     Productos.create(req.body, (err, data) => {
         if(err) {
             return next(err);
@@ -40,7 +46,11 @@ productosRoute.route("/").post((req, res, next) => {
     })
 });
 
-productosRoute.route("/:id").put((req, res) => {
+productosRoute.route("/:id").put(checkSchema(productosCheckSchema), (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     Productos.findByIdAndUpdate(req.params.id, { $set: req.body }, {new: true}, (err, data) => {
         if(err) {
             return next(err);

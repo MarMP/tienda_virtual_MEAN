@@ -1,15 +1,44 @@
-<mat-toolbar color="primary">
-    <span>Tienda-Virtual</span>
+<div *ngIf="isAdmin()">
+    <mat-toolbar color="primary">
+        <span>Tienda-Virtual</span>
 
-    <span class="example-spacer"></span>
-    <button mat-button [routerLink]="['/']">Home</button>
-    <button mat-button [routerLink]="['/categorias']">Categorías</button>
-    <button mat-button [routerLink]="['/usuarios']">Usuarios</button>
-    <button mat-button [routerLink]="['/productos']">Productos</button>
-    <button mat-button [routerLink]="['/pedidos']">Pedidos</button>
-    
+        <span class="example-spacer"></span>
+        <button mat-button [routerLink]="['/home']">Home</button>
+        <button mat-button [routerLink]="['/categorias']">Categorías</button>
+        <button mat-button [routerLink]="['/usuarios']">Usuarios</button>
+        <button mat-button [routerLink]="['/productos']">Productos</button>
+        <button mat-button [routerLink]="['/pedidos']">Pedidos</button>
 
-    <button [routerLink]="['/login']" mat-icon-button class="example-icon favorite-icon">
-        <mat-icon>logout</mat-icon>
-    </button>
-</mat-toolbar>
+
+        <button mat-icon-button class="example-icon favorite-icon" (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+        </button>
+        <router-outlet></router-outlet>
+
+
+    </mat-toolbar>
+
+</div>
+
+<div *ngIf="!isAdmin()">
+    <mat-toolbar color="primary">
+        <span>Tienda-Virtual</span>
+
+        <span class="example-spacer"></span>
+        <button mat-button [routerLink]="['/home']">Home</button>
+        <button mat-button [routerLink]="['/categorias']">Categorías</button>
+        <button mat-button [routerLink]="['/usuarios']">Usuarios</button>
+        <button mat-button [routerLink]="['/productos']">Productos</button>
+
+        <button mat-icon-button class="example-icon favorite-icon" (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+        </button>
+        <router-outlet></router-outlet>
+
+
+    </mat-toolbar>
+
+</div>
+
+
+

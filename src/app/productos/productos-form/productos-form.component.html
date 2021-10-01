@@ -22,7 +22,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>Precio</mat-label>
-            <input matInput formControlName="precio"/>
+            <input matInput currencyMask formControlName="precio" [options]="{ prefix: '', suffix: ' €', thousands: '.', decimal: ',' }"/>
         </mat-form-field>
           <mat-form-field>
               <mat-label>Categoria</mat-label>

@@ -58,11 +58,11 @@ export class CategoriasFormComponent {
       Swal.fire("Categoría modificada correctamente");
     } else {
       req = this.categoriaService.insertCategoria(this.item);
-      Swal.fire("Categoría insertada correctamente");
     }
 
     req.subscribe(data => {
       if (typeof data._id !== "undefined") {
+        Swal.fire("Categoría insertada correctamente");
         this.router.navigate(["/categorias"]);
       } else {
         Swal.fire("Se ha producido un error");

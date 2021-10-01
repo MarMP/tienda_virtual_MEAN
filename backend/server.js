@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+//Para el token
+const jwt = require('jsonwebtoken');
+const configs = require('./config/config');
+
 const dbconfig = require('./database/db');
 
 //conexión a la BBDD
@@ -13,6 +17,10 @@ mongoose.connect(dbconfig.db, { useNewUrlParser: true }).then(() => {
     console.log(error);
 });
 
+//Login
+const loginRoute = require('./routes/login.route');
+//Registro
+const registroRoute = require('./routes/register.route');
 //Categorias
 const categoriaRoute = require('./routes/categorias.route');
 //Usuarios
@@ -21,12 +29,23 @@ const usuariosRoute = require('./routes/usuarios.route');
 const productosRoute = require('./routes/productos.route');
 //Pedidos
 const pedidosRoute = require('./routes/pedidos.route');
+//Autorization 
+const authorization = require('./routes/authorization');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-//este es el prefijo de las rutas 
+//Prefijo de las rutas 
+
+//Login
+app.use("/login", loginRoute);
+//Registro
+app.use("/registro", registroRoute);
+
+//Autorización middleware
+app.use(authorization());
+
 
 //categorias
 app.use("/categorias", categoriaRoute);
