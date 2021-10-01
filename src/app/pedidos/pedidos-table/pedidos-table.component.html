@@ -7,9 +7,27 @@
         <mat-icon>add</mat-icon> Añadir
       </button>
     </mat-card-header>
+    <form [formGroup]="formBsq" class="frmBusqueda">
+      <fieldset>
+        <legend>Bucador</legend>
+        <mat-form-field>
+          <mat-label>Nº pedido</mat-label> 
+          <input matInput formControlName="nPedido">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Cliente</mat-label> 
+          <input matInput formControlName="cliente">
+        </mat-form-field>
+  
+        <p class="cntBotones">
+          <button type="button" style="margin-right: 10px;" *ngIf="hasFilters" mat-raised-button color="primary" (click)="clearFilters()">Ver todos</button>
+          <button type="submit" mat-raised-button color="primary" (click)="filtrar()">Filtrar</button>
+        </p>
+      </fieldset>
+    </form>
     <mat-card-content>
       <table mat-table class="full-width-table" matSort aria-label="Elements">
-   
         <!-- Numero de Pedido Column -->
         <ng-container matColumnDef="numeroPedido">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Pedido</th>

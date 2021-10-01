@@ -21,7 +21,7 @@ export class CategoriasTableComponent implements AfterViewInit {
   listaCategoria: Categoria[];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'nombre', 'acciones'];
+  displayedColumns = ['nombre', 'acciones'];
 
   constructor(private categoriaService: CategoriasService) {
     this.listaCategoria = [];

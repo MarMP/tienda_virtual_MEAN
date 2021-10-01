@@ -16,4 +16,13 @@ mat-card-title {
   position: absolute;
   right: 0;
   margin-right: 30px;
- }
+}
+.frmBusqueda {
+  margin-bottom: 10px;
+}
+
+mat-form-field {
+  width: 30%;
+  margin-left: 10px;
+  margin-right: 10px;  
+} 

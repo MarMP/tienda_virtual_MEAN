@@ -6,6 +6,12 @@ import { Pedido } from 'src/app/models/Pedido';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { PedidosTableDataSource } from './pedidos-table-datasource';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+export interface FiltrosPedido {
+  nPedido?: string,
+  cliente?: string,
+}
 
 @Component({
   selector: 'app-pedidos-table',
@@ -19,12 +25,21 @@ export class PedidosTableComponent implements AfterViewInit {
   dataSource: PedidosTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['numeroPedido', 'cliente' , 'dni', 'email', 'direccionEntrega', 'fecha', 'cantidad', 'precioTotal', 'acciones' ];
+  displayedColumns = ['numeroPedido', 'cliente', 'dni', 'email', 'direccionEntrega', 'fecha', 'cantidad', 'precioTotal', 'acciones'];
   listaPedidos: Pedido[];
 
-  constructor(private pedidoService: PedidosService) {
+  //Búsqueda de pedidos
+  formBsq!: FormGroup;
+  filtros: FiltrosPedido = {};
+  hasFilters: boolean = false;
+
+  constructor(private pedidoService: PedidosService, private fb: FormBuilder) {
     this.listaPedidos = [];
     this.dataSource = new PedidosTableDataSource(this.listaPedidos);
+  }
+
+  ngOnInit(): void {
+    this.buildFrmBsq();
   }
 
   ngAfterViewInit(): void {
@@ -34,16 +49,67 @@ export class PedidosTableComponent implements AfterViewInit {
   listarPedidos() {
     this.pedidoService.getPedidos().subscribe(data => {
       this.listaPedidos = data;
-      this.dataSource = new PedidosTableDataSource(this.listaPedidos);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.table.dataSource = this.dataSource;
+      this.initTableData(this.listaPedidos);
     });
+  }
+
+  initTableData(data: Pedido[]) {
+    this.dataSource = new PedidosTableDataSource(data);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
   }
   borrarPedido(id: string) {
     this.pedidoService.delPedido(id).subscribe(data => {
       this.listarPedidos();
     });
     Swal.fire("Ususario eliminado");
+  }
+
+  buildFrmBsq() {
+    this.formBsq = this.fb.group({
+      nPedido: "",
+      cliente: ""
+    });
+  }
+
+  filtrar() {
+    let filtros = this.formBsq.value;
+    console.log(filtros);
+    this.filtros = {};
+
+    if (filtros.nPedido != "") {
+      this.hasFilters = true;
+      this.filtros.nPedido = filtros.nPedido;
+    }
+    if (filtros.cliente != "") {
+      this.hasFilters = true;
+      this.filtros.cliente = filtros.cliente;
+    }
+
+    console.log(this.filtros);
+
+    let lst = this.listaPedidos.filter((u) => {
+      let coincide = true;
+
+      if (coincide && typeof this.filtros.nPedido !== "undefined") {
+        coincide = u.numeroPedido.toLowerCase().indexOf(this.filtros.nPedido.toLowerCase()) !== -1;
+      }
+
+      if (coincide && typeof this.filtros.cliente !== "undefined") {
+        coincide = (u.cliente.nombre + " " + u.cliente.apellido).toLowerCase().indexOf(this.filtros.cliente.toLowerCase()) !== -1;
+      }
+
+      return coincide;
+    });
+
+    console.log(lst);
+    this.initTableData(lst);
+  }
+
+  clearFilters() {
+    this.hasFilters = false;
+    this.buildFrmBsq();
+    this.initTableData(this.listaPedidos);
   }
 }
