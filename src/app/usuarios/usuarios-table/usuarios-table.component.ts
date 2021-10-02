@@ -41,7 +41,7 @@ export class UsuariosTableComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.buildFrmBsq();
+    this.formularioBusqueda();
   }
 
   ngAfterViewInit(): void {
@@ -52,7 +52,7 @@ export class UsuariosTableComponent implements AfterViewInit {
     this.usuarioService.getUsuarios().subscribe(data => {
       console.log(data);
       this.listaUsuarios = data;
-      this.initTableData(this.listaUsuarios);
+      this.datosTabla(this.listaUsuarios);
     });
   }
 
@@ -63,14 +63,14 @@ export class UsuariosTableComponent implements AfterViewInit {
     Swal.fire("Usuario eliminado correctamente");
   }
 
-  initTableData(data: Usuario[]) {
+  datosTabla(data: Usuario[]) {
     this.dataSource = new UsuariosTableDataSource(data);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
 
-  buildFrmBsq() {
+  formularioBusqueda() {
     this.formBsq = this.fb.group({
       nombre: "",
       dni: ""
@@ -108,12 +108,12 @@ export class UsuariosTableComponent implements AfterViewInit {
     });
 
     console.log(lst);
-    this.initTableData(lst);
+    this.datosTabla(lst);
   }
 
 
-  clearFilters() {
-    this.buildFrmBsq();
-    this.initTableData(this.listaUsuarios);
+  limpiarRegistros() {
+    this.formularioBusqueda();
+    this.datosTabla(this.listaUsuarios);
   }
 }

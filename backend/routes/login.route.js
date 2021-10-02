@@ -16,15 +16,20 @@ loginRoute.post('/', (req, res, next) => {
     if (user.username != resp.username) {
       res.json({ msg: "Usuario incorrecto" });
     } else {
-      if (req.body.clave == resp.clave) {
-        let payload = { username: user.username, tipoUsuario: resp.tipoUsuario };
-        let token = jwt.sign(payload, config.claveSecreta, { expiresIn: 1440 });
-        res.json({ msg: "Autenticación correcta", token: token, payload: payload })
-      } else {
-        res.json({ msg: "Usuario o contraseña incorrectos." });
-      }
+      //compara la clave encriptada en BD con la clave introducida 
+      bcrypt.compare(req.body.clave, resp.clave, (err, clave) => {
+        if (clave) {
+          let payload = { username: user.username, tipoUsuario: resp.tipoUsuario };
+          let token = jwt.sign(payload, config.claveSecreta, { expiresIn: 1440 });
+          res.json({ msg: "Autenticación correcta", token: token, payload: payload })
+        } else {
+          res.json({ msg: "Usuario o contraseña incorrectos." });
+        }
+      })
     }
   });
 });
 
+
 module.exports = loginRoute;
+

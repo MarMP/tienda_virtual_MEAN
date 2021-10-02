@@ -36,8 +36,7 @@ let productosCheckSchema = {
         }
     },
     categoriaId: { 
-        isEmpty: { errorMessage: 'La categoría es obligatoria', negated: true },
-        //idMongoId: { errorMessage: 'El id de categoría no es correcto'}
+        isEmpty: { errorMessage: 'La categoría es obligatoria', negated: true }
     }
 
 }

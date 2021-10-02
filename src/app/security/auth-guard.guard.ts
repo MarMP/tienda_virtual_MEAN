@@ -19,6 +19,7 @@ export class AuthGuardGuard implements CanActivate {
       //console.log(tokenParse.payload.tipoUsuario);
       //Datos del tipo usuario: Cliente o Administrador
       let tipoUser = tokenParse.payload.tipoUsuario;  
+      console.log(tipoUser);
 
       if (tipoUser == "Administrador") {
         console.log("ESTOY AQUI");

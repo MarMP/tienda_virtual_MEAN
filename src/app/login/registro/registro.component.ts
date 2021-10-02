@@ -13,7 +13,7 @@ export class RegistroComponent {
   
   private urlBase = "http://localhost:4000/registro/";
 
-  registrationForm = this.fb.group({
+  formGroup = this.fb.group({
     nombre: [null, Validators.required],
     apellido: [null, Validators.required],
     dni: [null, Validators.required],
@@ -23,37 +23,24 @@ export class RegistroComponent {
   });
 
   usuario: Usuario;
+  userTypesValues = Object.values(UserType);
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient, private router: Router) {
-    this.usuario = {
-      nombre: '',
-      apellido: '',
-      dni: '',
-      email: '',
+    this.usuario = { nombre: "", apellido: "", dni: "", email: "", username: "", clave: "", tipoUsuario: UserType.CLIENT, direcciones: [] }
+  }
+ 
+  onSubmit(): void {
+    this.httpClient.post<any>(this.urlBase, {
+      nombre: this.formGroup.value.nombre, 
+      apellido: this.formGroup.value.apellido, 
+      dni: this.formGroup.value.dni, 
+      email: this.formGroup.value.email, 
+      username: this.formGroup.value.username, 
+      clave: this.formGroup.value.clave,
       tipoUsuario: UserType.CLIENT,
       direcciones: [],
-      username: '',
-      clave :'',
-    }
-  }
-  ngOnInit(): void {
-
-    this.registrationForm = this.fb.group(this.usuario);
-
-    this.registrationForm.get('nombre')?.setValidators(Validators.required);
-    this.registrationForm.get('apellido')?.setValidators(Validators.required);
-    this.registrationForm.get('dni')?.setValidators(Validators.required);
-    this.registrationForm.get('email')?.setValidators(Validators.required);
-    this.registrationForm.get('username')?.setValidators(Validators.required);
-    this.registrationForm.get('clave')?.setValidators(Validators.required);
-  }
-
-  onSubmit(): void {
-    this.usuario = this.registrationForm.value;
-    this.httpClient.post<any>(this.urlBase, this.usuario)
-    .subscribe(
-      token => {
-        sessionStorage.setItem('token', JSON.stringify(token));
+    })
+    .subscribe(data => {
         this.router.navigate(["/login"]);
       },
       error => this.onError(error));
@@ -74,7 +61,7 @@ export class RegistroComponent {
   
     }
 
-  /*public registrar(){
+  public cancelar(){
     this.router.navigate(["/login"]);
-  } */
+  } 
 }

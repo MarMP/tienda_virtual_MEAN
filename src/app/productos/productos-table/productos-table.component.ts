@@ -46,7 +46,7 @@ export class ProductosTableComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.buildFrmBsq();
+    this.formularioBusqueda();
     this.categoriaService.getCategorias().subscribe(data => {
       this.listaCategorias = data;
     });
@@ -60,11 +60,11 @@ export class ProductosTableComponent implements AfterViewInit {
   listarProductos() {
     this.productoService.getProductos().subscribe(data => {
       this.listaProductos = data;
-      this.initTableData(this.listaProductos);
+      this.datosTabla(this.listaProductos);
     });
   }
 
-  initTableData(data: Producto[]) {
+  datosTabla(data: Producto[]) {
     this.dataSource = new ProductosTableDataSource(data);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -78,7 +78,7 @@ export class ProductosTableComponent implements AfterViewInit {
     Swal.fire("Ususario eliminado");
   }
 
-  buildFrmBsq() {
+  formularioBusqueda() {
     this.formBsq = this.fb.group({
       ref: "",
       titulo: "",
@@ -142,13 +142,13 @@ export class ProductosTableComponent implements AfterViewInit {
     });
 
     console.log(lst);
-    this.initTableData(lst);
+    this.datosTabla(lst);
   }
 
-  clearFilters() {
+  limpiarRegistrosBusqueda() {
     this.hasFilters = false;
-    this.buildFrmBsq();
-    this.initTableData(this.listaProductos);
+    this.formularioBusqueda();
+    this.datosTabla(this.listaProductos);
   }
 
 }

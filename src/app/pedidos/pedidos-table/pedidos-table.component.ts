@@ -39,7 +39,7 @@ export class PedidosTableComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.buildFrmBsq();
+    this.formularioBusqueda();
   }
 
   ngAfterViewInit(): void {
@@ -49,11 +49,11 @@ export class PedidosTableComponent implements AfterViewInit {
   listarPedidos() {
     this.pedidoService.getPedidos().subscribe(data => {
       this.listaPedidos = data;
-      this.initTableData(this.listaPedidos);
+      this.datosTabla(this.listaPedidos);
     });
   }
 
-  initTableData(data: Pedido[]) {
+  datosTabla(data: Pedido[]) {
     this.dataSource = new PedidosTableDataSource(data);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -66,7 +66,7 @@ export class PedidosTableComponent implements AfterViewInit {
     Swal.fire("Ususario eliminado");
   }
 
-  buildFrmBsq() {
+  formularioBusqueda() {
     this.formBsq = this.fb.group({
       nPedido: "",
       cliente: ""
@@ -104,12 +104,12 @@ export class PedidosTableComponent implements AfterViewInit {
     });
 
     console.log(lst);
-    this.initTableData(lst);
+    this.datosTabla(lst);
   }
 
-  clearFilters() {
+  limpiarRegistrosBusqueda() {
     this.hasFilters = false;
-    this.buildFrmBsq();
-    this.initTableData(this.listaPedidos);
+    this.formularioBusqueda();
+    this.datosTabla(this.listaPedidos);
   }
 }
